@@ -1,5 +1,7 @@
 {
   "name": "energizeMe",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
