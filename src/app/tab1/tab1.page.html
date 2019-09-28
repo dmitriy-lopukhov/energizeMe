@@ -10,7 +10,8 @@
   <iframe src="https://map.openchargemap.io/?mode=embedded" allow="geolocation" frameborder="0" width="100%"
     height="400px"></iframe>
   <ion-content>
-    <ion-item detail *ngFor="let item of chargingStations$ | async">
+    <ion-item detail *ngFor="let item of chargingStations$ | async"
+      [routerLink]="['/tabs/tab1/station-details/', item.ID]">
       <ion-avatar slot="start">
         <!-- <ion-icon name="battery-charging"></ion-icon> -->
         <img src="https://cdn3.iconfinder.com/data/icons/basicolor-computer-tech/24/105_battery_charging-512.png">
@@ -23,7 +24,14 @@
         <ion-text color="primary">
           <p>{{item.AddressInfo.Postcode}} {{item.AddressInfo.Town}}, {{item.AddressInfo.AddressLine1}}</p>
         </ion-text>
+        <ion-text>
+          <p>{{item.UsageCost}}</p>
+        </ion-text>
       </ion-label>
+      <!-- <ion-icon name="information-circle" size="large" slot="end"></ion-icon> -->
+      <ion-note color="danger" slot="end" class="price">
+        0,2 €
+      </ion-note>
     </ion-item>
   </ion-content>
 </ion-content>

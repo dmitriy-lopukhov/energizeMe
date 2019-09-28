@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ChargingStationsService } from '../core/services/charging-stations.service';
 import { Observable } from 'rxjs';
 import { IChagingStation } from '../core/types/charging-station.type';
@@ -12,16 +11,12 @@ import { IChagingStation } from '../core/types/charging-station.type';
 export class Tab1Page {
   chargingStations$: Observable<IChagingStation[]>;
 
-  constructor(private geolocation: Geolocation,
+  constructor(
     private chargingStationsService: ChargingStationsService) {
     this.chargingStations$ = this.chargingStationsService.chargingStations$;
 
-    this.geolocation.getCurrentPosition().then((resp) => {
-      console.log(resp.coords.latitude, resp.coords.longitude);
-      this.chargingStationsService.getChargingStations(resp.coords.latitude, resp.coords.longitude);
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });
+    this.chargingStationsService.getChargingStations();
+
 
     //  let watch = this.geolocation.watchPosition();
     //   watch.subscribe((data) => {

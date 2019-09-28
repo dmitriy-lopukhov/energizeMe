@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Charging station details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-list-header color="light">Charging price during a day</ion-list-header>
+    <canvas #lineChart></canvas>
+
+    <ion-card-header>
+      <ion-card-title>{{station?.AddressInfo?.Title}}</ion-card-title>
+      <ion-card-subtitle>
+        {{station?.AddressInfo?.AccessComments}}
+      </ion-card-subtitle>
+      <ion-badge color="success">0,2 €</ion-badge>
+
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{station?.AddressInfo?.Postcode}} {{station?.AddressInfo?.Town}},
+        {{station?.AddressInfo?.AddressLine1}}</p>
+      <p>{{station?.UsageCost}}</p>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>
