@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { ChargingStationsService } from '../core/services/charging-stations.service';
+import { Observable } from 'rxjs';
+import { IChagingStation } from '../core/types/charging-station.type';
 
 @Component({
   selector: 'app-tab1',
@@ -7,12 +10,15 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  chargingStations$: Observable<IChagingStation[]>;
 
-  constructor(private geolocation: Geolocation) {
+  constructor(private geolocation: Geolocation,
+    private chargingStationsService: ChargingStationsService) {
+    this.chargingStations$ = this.chargingStationsService.chargingStations$;
+
     this.geolocation.getCurrentPosition().then((resp) => {
-      // resp.coords.latitude
-      // resp.coords.longitude
-      console.log(resp.coords);
+      console.log(resp.coords.latitude, resp.coords.longitude);
+      this.chargingStationsService.getChargingStations(resp.coords.latitude, resp.coords.longitude);
     }).catch((error) => {
       console.log('Error getting location', error);
     });
@@ -23,6 +29,7 @@ export class Tab1Page {
     //   // data.coords.latitude
     //   // data.coords.longitude
     //   });
+
   }
 
 
