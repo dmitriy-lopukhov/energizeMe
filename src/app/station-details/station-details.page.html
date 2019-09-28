@@ -17,14 +17,12 @@
       <ion-card-subtitle>
         {{station?.AddressInfo?.AccessComments}}
       </ion-card-subtitle>
-      <ion-badge color="success">0,2 €</ion-badge>
-
+      <ion-badge [color]="getPriceColor(station?.Price)">{{station?.Price|number:'1.2-2'}} €</ion-badge>
     </ion-card-header>
     <ion-card-content>
       <p>{{station?.AddressInfo?.Postcode}} {{station?.AddressInfo?.Town}},
         {{station?.AddressInfo?.AddressLine1}}</p>
       <p>{{station?.UsageCost}}</p>
-
     </ion-card-content>
   </ion-card>
 </ion-content>

@@ -5,6 +5,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { IChagingStation } from '../core/types/charging-station.type';
 import { ChargingStationsService } from '../core/services/charging-stations.service';
 import { Chart } from 'chart.js';
+import { getPriceColor } from '../core/utils/utils';
 
 @Component({
   selector: 'app-station-details',
@@ -67,6 +68,10 @@ export class StationDetailsPage implements OnDestroy {
         }
       }
     });
+  }
+
+  getPriceColor(price: number) {
+    return getPriceColor(price);
   }
 
 }

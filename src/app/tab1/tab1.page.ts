@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ChargingStationsService } from '../core/services/charging-stations.service';
 import { Observable } from 'rxjs';
 import { IChagingStation } from '../core/types/charging-station.type';
+import { getPriceColor } from '../core/utils/utils';
 
 @Component({
   selector: 'app-tab1',
@@ -27,7 +28,9 @@ export class Tab1Page {
 
   }
 
-
+  getPriceColor(price: number) {
+    return getPriceColor(price);
+  }
 
 
 

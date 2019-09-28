@@ -1,5 +1,6 @@
 export interface IChagingStation {
     AddressInfo: IAddressInfo;
+    Price: number;
     UsageCost: string;
     ID: number;
 }
