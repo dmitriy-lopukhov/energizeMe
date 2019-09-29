@@ -31,23 +31,22 @@ export class ChargingStationsService {
         distance: 2,
         distanceunit: 'km',
       };
-
-      this.http.get<IChagingStation[]>(
-        `https://api.openchargemap.io/v3/poi/`
-        + `?output=json&countrycode=DE&latitude=${options.latitude}&longitude=${options.longitude}&distance=2&distanceunit=km`)
-        .pipe(
-          mergeMap(stations => this.getPrices(stations.map(i => i.ID)).pipe(map(prices => {
-            return {
-              stations,
-              prices
-            };
-          }))),
-          map(
-            response => response.stations.slice(1, 10).map(i => {
-              i.Price = response.prices[i.ID];
-              return i;
-            }).sort((a, b) => a.Price - b.Price))
-        )
+      // this.http.get<IChagingStation[]>(`/api/v1/getstations/?latitude=${options.latitude}&longitude=${options.longitude}`)
+      //   .subscribe(data => this.chargingStations.next(data));
+      this.http.get<IChagingStation[]>(`https://api.openchargemap.io/v3/poi/?output=json&countrycode=DE&latitude=${options.latitude}&longitude=${options.longitude}&distance=2&distanceunit=km`)
+        .pipe(map(data => data.map(i => {
+          i.Price = Math.random();
+          // get distance and travel time to charging stations
+          this.http.get('https://route.api.here.com/routing/7.2/calculateroute.json?waypoint0='+'geo!'+options.latitude+','+options.longitude+
+            '&waypoint1='+'geo!'+i.AddressInfo.Latitude+','+i.AddressInfo.Longitude+'&mode=fastest%3Bcar%3Btraffic%3Aenabled&app_id=xdelknKdNQaWvEJmTI0w&app_code=a9u2g4s8up0heUvSGWmK6Q&departure=now')
+            .subscribe(data => {
+              var routeSummary = data['response']['route'][0]['summary'];
+              //console.log(routeSummary);
+              i.Distance = routeSummary['distance'];
+              i.TravelTime = routeSummary['travelTime'];
+            });
+          return i;
+        })))
         .subscribe(data => this.chargingStations.next(data));
 
 

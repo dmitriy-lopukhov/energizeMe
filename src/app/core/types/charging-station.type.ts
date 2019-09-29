@@ -3,6 +3,8 @@ export interface IChagingStation {
     Price: number;
     UsageCost: string;
     ID: number;
+    Distance: number;
+    TravelTime: number;
 }
 
 interface IAddressInfo {
