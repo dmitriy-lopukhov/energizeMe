@@ -1,17 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IChagingStation, IPrices } from '../types/charging-station.type';
+import { IChagingStation, IPrices, IConsumptionResponse, IConsumption } from '../types/charging-station.type';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { map, flatMap, mergeMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChargingStationsService {
   private readonly apiHost = 'https://energizehackathonka2019.herokuapp.com';
+
   private chargingStations = new BehaviorSubject<IChagingStation[]>(null);
   readonly chargingStations$ = this.chargingStations.asObservable();
+
+  private consumption = new BehaviorSubject<IConsumption>(null);
+  readonly consumption$ = this.consumption.asObservable();
 
   constructor(private http: HttpClient, private geolocation: Geolocation) { }
 
@@ -54,6 +59,25 @@ export class ChargingStationsService {
 
   private getPrices(stationIds: number[]): Observable<IPrices> {
     return this.http.post<IPrices>(this.apiHost + '/get_stations', { stations: stationIds });
+  }
+
+  getConsumption(stationId: number): void {
+    this.http.get<IConsumptionResponse>(this.apiHost + '/get_consumption?stationId=' + stationId)
+      .pipe(map(response => {
+        const consumption: IConsumption = {
+          labels: [],
+          prices: []
+        };
+        Object.keys(response).forEach(i => {
+          const date = moment(i).format('HH:mm');
+          consumption.labels.push(date);
+          consumption.prices.push(response[i]);
+        });
+        return consumption;
+      }))
+      .subscribe(
+        data => this.consumption.next(data)
+      );
   }
 
   private getCurrentPosition() {
