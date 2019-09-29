@@ -17,3 +17,13 @@ interface IAddressInfo {
     AccessComments: string;
     AddressLine1: string;
 }
+
+export interface IPrices { [id: number]: number; }
+
+export interface IConsumption {
+    labels: string[];
+    prices: number[];
+}
+export interface IConsumptionResponse {
+    [date: string]: number;
+}
