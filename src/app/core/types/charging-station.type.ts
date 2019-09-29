@@ -25,3 +25,7 @@ export interface IConsumption {
 export interface IConsumptionResponse {
     [date: string]: number;
 }
+
+export interface IStats {
+    [hour: string]: number[];
+}
