@@ -11,7 +11,7 @@
     height="400px"></iframe>
   <ion-content>
     <ion-item detail *ngFor="let item of chargingStations$ | async"
-      [routerLink]="['/tabs/tab1/station-details/', item.ID]">
+      [routerLink]="['/tabs/tab1/station-details/', item.ID]" routerDirection="forward">
       <ion-avatar slot="start">
         <!-- <ion-icon name="battery-charging"></ion-icon> -->
         <img src="https://cdn3.iconfinder.com/data/icons/basicolor-computer-tech/24/105_battery_charging-512.png">

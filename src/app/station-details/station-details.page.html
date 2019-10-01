@@ -23,6 +23,10 @@
       <p>{{station?.AddressInfo?.Postcode}} {{station?.AddressInfo?.Town}},
         {{station?.AddressInfo?.AddressLine1}}</p>
       <p>{{station?.UsageCost}}</p>
+      <br>
+      <ion-button expand="full" [routerLink]="['/tabs/tab1']" routerDirection="backward">
+        <ion-icon size="large" name="checkmark"></ion-icon> BOOK
+      </ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>
